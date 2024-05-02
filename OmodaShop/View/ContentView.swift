@@ -20,19 +20,24 @@ struct ContentView: View {
         static let options = "Комплектация"
         static let insurance = "ОМОДА Каско"
         static let price = "Цена"
-        static let priceValue = 1_889_900
         static let currency = "руб"
         static let order = "Заказать"
         static let spacer = 14.0
         static let shareButtonWidth = 24.0
+        static let orderMessage = "Благодарим за заказ. Наш менеджер свяжется с Вами в рабочее время для уточнения деталей."
     }
     
     @ObservedObject private var viewModel = OmodaViewModel(model: CarData())
     @State var pickerIndex = 0
     @State var sliderValue = 0.0
-    @State var isInsuranceAplied = false
-    private var pickerLabel = ["C5", "S5", "S5 GT"]
-    private var options = ["Joy", "LifeStyle", "Ultimate", "Active", "Supreme"]
+    @State var isOrderButtonPressed = false
+    
+    var pickerMaxValue: Double {
+        viewModel.optionCost * Double(viewModel.options.count - 1)
+    }
+    var step: Double {
+        viewModel.optionCost
+    }
     
     var body: some View {
         ZStack {
@@ -52,14 +57,14 @@ struct ContentView: View {
                             .frame(width: Constants.shareButtonWidth)
                     })
                 }.padding(.horizontal)
-                    Image(pickerLabel[pickerIndex], bundle: nil)
+                Image(viewModel.models[pickerIndex], bundle: nil)
                         .resizable()
                         .aspectRatio(Constants.imageRatio, contentMode: .fit)
                         .padding(EdgeInsets(top: 22, leading: 22, bottom: 37, trailing: 22))
                     
                     Picker(selection: $pickerIndex) {
-                        ForEach(0..<pickerLabel.count, id: \.self) {
-                            Text(pickerLabel[$0]).tag($0)
+                        ForEach(0..<viewModel.models.count, id: \.self) {
+                            Text(viewModel.models[$0]).tag($0)
                         }
                     } label: {
                         Text("")
@@ -104,25 +109,39 @@ struct ContentView: View {
                                     Spacer()
                             }
                             
-                            Slider(value: $sliderValue, in: 0...760, step: 190, label: {})
+                            
+                            
+                            Slider(value: Binding(get: {
+                                sliderValue
+                            }, set: { newValue in
+                                    sliderValue = newValue
+                                viewModel.updatePrice(value: newValue)
+                                print(viewModel.actualPrice)
+                            }), in: 0...pickerMaxValue, step: step, label: {})
                                 .padding(.horizontal)
                                 .tint(.black)
                             
                             HStack {
                                 Spacer()
-                                ForEach(0..<options.count, id: \.self) {
-                                    Text(options[$0])
+                                ForEach(0..<viewModel.options.count, id: \.self) {
+                                    Text(viewModel.options[$0])
                                         Spacer()
 
                                 }
                             }
                             .padding(.bottom)
                             
-                            Toggle(isOn: $isInsuranceAplied) {
+                            
+                            Toggle(isOn: Binding(get: {
+                                viewModel.isInsuranceAplied
+                            }, set: { newValue in
+                                viewModel.isInsuranceAplied = newValue
+                                viewModel.updatePrice(value: sliderValue)
+                            }), label: {
                                 Text(Constants.insurance)
                                     .font(.system(size: 16))
                                     
-                            }
+                            })
                             .padding(.horizontal)
                             
                             Divider().padding(EdgeInsets(top: 0, leading: 70, bottom: 16, trailing: 70))
@@ -130,12 +149,14 @@ struct ContentView: View {
                             HStack {
                                 Text(Constants.price)
                                 Spacer()
-                                Text("\(Constants.priceValue) \(Constants.currency)")
+                                Text("\(Int(viewModel.actualPrice)) \(Constants.currency)")
                             }
                             .padding(EdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16))
                             .font(.system(size: 18, weight: .bold))
                             
-                            Button(action: {}) {
+                            Button(action: {
+                                isOrderButtonPressed = true
+                            }) {
                                 Spacer()
                                 Text(Constants.order)
                                 Spacer()
@@ -145,6 +166,9 @@ struct ContentView: View {
                             .background(RoundedRectangle(cornerRadius: 8)
                                 .foregroundColor(.blackApp))
                             .padding(.horizontal)
+                            .actionSheet(isPresented: $isOrderButtonPressed, content: {
+                                ActionSheet(title: Text(Constants.orderMessage))
+                            })
                             
                         }
                     )

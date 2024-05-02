@@ -8,9 +8,10 @@
 import Foundation
 
 final class OmodaViewModel: ObservableObject {
-    @Published public var optionCost: Double
+    
     @Published public var actualPrice: Double
     @Published public var isInsuranceAplied = false
+    public var optionCost: Double
     public let options: [String]
     public let models: [String]
     
@@ -37,20 +38,4 @@ final class OmodaViewModel: ObservableObject {
 }
 
 
-struct CarData {
-    let optionCost = 190.0
-    let insuranceCost = 99_000.0
-//    private var actualPrice: Double
-    let minimalPrice = 1_889_900.0
-    
-    let options = ["Joy", "LifeStyle", "Ultimate", "Active", "Supreme"]
-    let models = ["C5", "S5", "S5 GT"]
-    
-//    func getPrice() -> Double {
-//        actualPrice
-//    }
-//    
-//    mutating func setPrice(value: Double) {
-//        actualPrice = minimalPrice + value
-//    }
-}
+
