@@ -26,6 +26,8 @@ struct ContentView: View {
         static let spacer = 14.0
         static let shareButtonWidth = 24.0
     }
+    
+    @ObservedObject private var viewModel = OmodaViewModel(model: CarData())
     @State var pickerIndex = 0
     @State var sliderValue = 0.0
     @State var isInsuranceAplied = false
