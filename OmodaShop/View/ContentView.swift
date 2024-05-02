@@ -31,8 +31,6 @@ struct ContentView: View {
     }
     
     @ObservedObject private var viewModel = OmodaViewModel(model: CarData())
-//    @State var pickerIndex = 0
-    @State var sliderValue = 0.0
     @State var isOrderButtonPressed = false
     
     var pickerMaxValue: Double {
@@ -66,18 +64,6 @@ struct ContentView: View {
                         .padding(EdgeInsets(top: 22, leading: 22, bottom: 37, trailing: 22))
                 
                 
-//                Picker(selection: Binding(get: {
-//                    $viewModel.modelIndex
-//                }, set: { newValue in
-//                    $viewModel.modelIndex = newValue
-//                    viewModel.updatePrice(value: sliderValue)
-//                })) {
-//                    ForEach(0..<viewModel.models.count, id: \.self) {
-//                        Text(viewModel.models[$0]).tag($0)
-//                    }
-//                } label: {
-//                    Text("")
-//                }
                     Picker(selection: $viewModel.modelIndex) {
                         ForEach(0..<viewModel.models.count, id: \.self) {
                             Text(viewModel.models[$0]).tag($0)
@@ -89,6 +75,7 @@ struct ContentView: View {
                     .background(RoundedRectangle(cornerRadius: 10)
                         .fill(.white))
                     .padding(EdgeInsets(top: 0, leading: 22, bottom: 22, trailing: 22))
+                    
                 
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.white)
@@ -127,13 +114,7 @@ struct ContentView: View {
                             
                             
                             
-                            Slider(value: Binding(get: {
-                                sliderValue
-                            }, set: { newValue in
-                                    sliderValue = newValue
-                                viewModel.updatePrice(value: newValue)
-                                print(viewModel.actualPrice)
-                            }), in: 0...pickerMaxValue, step: step, label: {})
+                            Slider(value: $viewModel.optionSliderValue, in: 0...pickerMaxValue, step: step, label: {})
                                 .padding(.horizontal)
                                 .tint(.black)
                                 .onAppear(perform: {
@@ -152,12 +133,7 @@ struct ContentView: View {
                             .padding(.bottom)
                             
                             
-                            Toggle(isOn: Binding(get: {
-                                viewModel.isInsuranceAplied
-                            }, set: { newValue in
-                                viewModel.isInsuranceAplied = newValue
-                                viewModel.updatePrice(value: sliderValue)
-                            }), label: {
+                            Toggle(isOn: $viewModel.isInsuranceAplied, label: {
                                 Text(Constants.insurance)
                                     .font(.system(size: 16))
                                     
@@ -167,9 +143,7 @@ struct ContentView: View {
                                 Alert(title:
                                         Text(Constants.insurance),
                                       message: Text(Constants.insuranceMessage),
-                                      primaryButton: .cancel(Text(Constants.no), action: {
-                                    viewModel.updatePrice(value: sliderValue)
-                                }),
+                                      primaryButton: .cancel(Text(Constants.no)),
                                       secondaryButton: .default(Text(Constants.yes), action: {
                                     viewModel.isInsuranceAplied = true
                                 }))
