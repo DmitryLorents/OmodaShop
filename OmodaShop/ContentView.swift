@@ -11,7 +11,7 @@ struct ContentView: View {
     
     private enum Constants {
         static let imageRatio = 345.0 / 198.0
-        static let heightRation = 0.4
+        static let heightRation = 0.5
         static let infoTitle = "Информация об автомобиле"
         static let engine = "Двигатель"
         static let engineData = "1.6 Тurbo"
@@ -21,11 +21,13 @@ struct ContentView: View {
         static let insurance = "ОМОДА Каско"
         static let price = "Цена"
         static let priceValue = 1_889_900
+        static let currency = "руб"
         static let order = "Заказать"
         static let spacer = 14.0
     }
     @State var pickerIndex = 0
     @State var sliderValue = 190.0
+    @State var isInsuranceAplied = false
     private var pickerLabel = ["C5", "S5", "S5 GT"]
     private var options = ["Joy", "LifeStyle", "Ultimate", "Active", "Supreme"]
     
@@ -38,7 +40,7 @@ struct ContentView: View {
                 Spacer()
                 
                     Image(.omodaLogo)
-                        .padding()
+                
                     Image(pickerLabel[pickerIndex], bundle: nil)
                         .resizable()
                         .aspectRatio(Constants.imageRatio, contentMode: .fit)
@@ -91,7 +93,7 @@ struct ContentView: View {
                                     Spacer()
                             }
                             
-                            Slider(value: $sliderValue, in: 0...1140, step: 190, label: {})
+                            Slider(value: $sliderValue, in: 0...760, step: 190, label: {})
                                 .padding(.horizontal)
                                 .tint(.black)
                             
@@ -103,8 +105,36 @@ struct ContentView: View {
 
                                 }
                             }
+                            .padding(.bottom)
                             
-                            Spacer()
+                            Toggle(isOn: $isInsuranceAplied) {
+                                Text(Constants.insurance)
+                                    .font(.system(size: 16))
+                                    
+                            }
+                            .padding(.horizontal)
+                            
+                            Divider().padding(EdgeInsets(top: 0, leading: 70, bottom: 16, trailing: 70))
+                            
+                            HStack {
+                                Text(Constants.price)
+                                Spacer()
+                                Text("\(Constants.priceValue) \(Constants.currency)")
+                            }
+                            .padding(EdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16))
+                            .font(.system(size: 18, weight: .bold))
+                            
+                            Button(action: {}) {
+                                Spacer()
+                                Text(Constants.order)
+                                Spacer()
+                            }
+                            .foregroundColor(.white)
+                            .frame(height: 48)
+                            .background(RoundedRectangle(cornerRadius: 8)
+                                .foregroundColor(.blackApp))
+                            .padding(.horizontal)
+                            
                         }
                     )
                 
