@@ -24,9 +24,10 @@ struct ContentView: View {
         static let currency = "руб"
         static let order = "Заказать"
         static let spacer = 14.0
+        static let shareButtonWidth = 24.0
     }
     @State var pickerIndex = 0
-    @State var sliderValue = 190.0
+    @State var sliderValue = 0.0
     @State var isInsuranceAplied = false
     private var pickerLabel = ["C5", "S5", "S5 GT"]
     private var options = ["Joy", "LifeStyle", "Ultimate", "Active", "Supreme"]
@@ -38,9 +39,17 @@ struct ContentView: View {
                 .ignoresSafeArea()
             VStack {
                 Spacer()
-                
+                HStack {
+                    Spacer()
+                        .frame(width: Constants.shareButtonWidth)
+                    Spacer()
                     Image(.omodaLogo)
-                
+                    Spacer()
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Image(.share)
+                            .frame(width: Constants.shareButtonWidth)
+                    })
+                }.padding(.horizontal)
                     Image(pickerLabel[pickerIndex], bundle: nil)
                         .resizable()
                         .aspectRatio(Constants.imageRatio, contentMode: .fit)
@@ -56,7 +65,7 @@ struct ContentView: View {
                     .pickerStyle(.segmented)
                     .background(RoundedRectangle(cornerRadius: 10)
                         .fill(.white))
-                    .padding(EdgeInsets(top: 0, leading: 22, bottom: 32, trailing: 22))
+                    .padding(EdgeInsets(top: 0, leading: 22, bottom: 22, trailing: 22))
                 
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.white)
