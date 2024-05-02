@@ -7,10 +7,11 @@
 
 import Foundation
 
-final class OmodaViewModel: ObservableObject {
+final class OmodaViewModel: ObservableObject{
     
     @Published public var actualPrice: Double
     @Published public var isInsuranceAplied = false
+    @Published public var modelIndex: Int
     public var optionCost: Double
     public let options: [String]
     public let models: [String]
@@ -20,20 +21,17 @@ final class OmodaViewModel: ObservableObject {
     init(model: CarData) {
         self.model = model
         optionCost = model.optionCost
-        actualPrice = model.minimalPrice
+        actualPrice = model.modelPrices[model.modelIndex]
         options = model.options
         models = model.models
+        modelIndex = model.modelIndex
     }
     
     func updatePrice(value: Double) {
-        actualPrice = model.minimalPrice + value
+        actualPrice = model.modelPrices[modelIndex] + value
         if isInsuranceAplied {
             actualPrice += model.insuranceCost
         }
-    }
-    
-    func addInsurance(_ isAdded: Bool) {
-        
     }
 }
 

@@ -25,10 +25,13 @@ struct ContentView: View {
         static let spacer = 14.0
         static let shareButtonWidth = 24.0
         static let orderMessage = "Благодарим за заказ. Наш менеджер свяжется с Вами в рабочее время для уточнения деталей."
+        static let insuranceMessage = "Подключить Каско на выгодных условиях?"
+        static let no = "Нет"
+        static let yes = "Да"
     }
     
     @ObservedObject private var viewModel = OmodaViewModel(model: CarData())
-    @State var pickerIndex = 0
+//    @State var pickerIndex = 0
     @State var sliderValue = 0.0
     @State var isOrderButtonPressed = false
     
@@ -57,12 +60,25 @@ struct ContentView: View {
                             .frame(width: Constants.shareButtonWidth)
                     })
                 }.padding(.horizontal)
-                Image(viewModel.models[pickerIndex], bundle: nil)
+                Image(viewModel.models[viewModel.modelIndex], bundle: nil)
                         .resizable()
                         .aspectRatio(Constants.imageRatio, contentMode: .fit)
                         .padding(EdgeInsets(top: 22, leading: 22, bottom: 37, trailing: 22))
-                    
-                    Picker(selection: $pickerIndex) {
+                
+                
+//                Picker(selection: Binding(get: {
+//                    $viewModel.modelIndex
+//                }, set: { newValue in
+//                    $viewModel.modelIndex = newValue
+//                    viewModel.updatePrice(value: sliderValue)
+//                })) {
+//                    ForEach(0..<viewModel.models.count, id: \.self) {
+//                        Text(viewModel.models[$0]).tag($0)
+//                    }
+//                } label: {
+//                    Text("")
+//                }
+                    Picker(selection: $viewModel.modelIndex) {
                         ForEach(0..<viewModel.models.count, id: \.self) {
                             Text(viewModel.models[$0]).tag($0)
                         }
@@ -120,6 +136,10 @@ struct ContentView: View {
                             }), in: 0...pickerMaxValue, step: step, label: {})
                                 .padding(.horizontal)
                                 .tint(.black)
+                                .onAppear(perform: {
+                                    UISlider.appearance()
+                                        .setThumbImage(.ball, for: .normal)
+                                })
                             
                             HStack {
                                 Spacer()
@@ -141,6 +161,18 @@ struct ContentView: View {
                                 Text(Constants.insurance)
                                     .font(.system(size: 16))
                                     
+                            })
+                            .alert(isPresented: $viewModel.isInsuranceAplied, content: {
+                                
+                                Alert(title:
+                                        Text(Constants.insurance),
+                                      message: Text(Constants.insuranceMessage),
+                                      primaryButton: .cancel(Text(Constants.no), action: {
+                                    viewModel.updatePrice(value: sliderValue)
+                                }),
+                                      secondaryButton: .default(Text(Constants.yes), action: {
+                                    viewModel.isInsuranceAplied = true
+                                }))
                             })
                             .padding(.horizontal)
                             
