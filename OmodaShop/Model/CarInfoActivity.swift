@@ -42,6 +42,10 @@ final class CarInfoActivity: UIActivity {
         true
     }
     
+    override var activityTitle: String? {
+        activityName
+    }
+    
     override func prepare(withActivityItems activityItems: [Any]) {
         // Nothing to prepare
     }

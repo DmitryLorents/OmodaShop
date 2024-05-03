@@ -28,7 +28,7 @@ struct ContentView: View {
         static let insuranceMessage = "Подключить Каско на выгодных условиях?"
         static let no = "Нет"
         static let yes = "Да"
-        static let activityName = "Omoda"
+        static let activityName = "Omoda info"
         static let activityImageName = "omodaActivity"
         static let shareMessage = " по цене "
     }
