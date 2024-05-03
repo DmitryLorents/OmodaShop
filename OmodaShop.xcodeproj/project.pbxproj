@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A45E0C72BE4B0C6005CA30D /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A45E0C62BE4B0C6005CA30D /* ActivityView.swift */; };
+		0A45E0C92BE4B20B005CA30D /* CarInfoActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A45E0C82BE4B20B005CA30D /* CarInfoActivity.swift */; };
 		0AD7B49C2BE3A854001C1D56 /* OmodaShopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7B49B2BE3A854001C1D56 /* OmodaShopApp.swift */; };
 		0AD7B49E2BE3A854001C1D56 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD7B49D2BE3A854001C1D56 /* ContentView.swift */; };
 		0AD7B4A02BE3A856001C1D56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AD7B49F2BE3A856001C1D56 /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A45E0C62BE4B0C6005CA30D /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		0A45E0C82BE4B20B005CA30D /* CarInfoActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoActivity.swift; sourceTree = "<group>"; };
 		0AD7B4982BE3A854001C1D56 /* OmodaShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OmodaShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AD7B49B2BE3A854001C1D56 /* OmodaShopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmodaShopApp.swift; sourceTree = "<group>"; };
 		0AD7B49D2BE3A854001C1D56 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 		0AD7B4AB2BE41282001C1D56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0A45E0C62BE4B0C6005CA30D /* ActivityView.swift */,
 				0AD7B49D2BE3A854001C1D56 /* ContentView.swift */,
 			);
 			path = View;
@@ -101,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				0AD7B4B02BE423F8001C1D56 /* CarData.swift */,
+				0A45E0C82BE4B20B005CA30D /* CarInfoActivity.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -178,7 +184,9 @@
 				0AD7B4B12BE423F8001C1D56 /* CarData.swift in Sources */,
 				0AD7B4AA2BE4122D001C1D56 /* OmodaViewModel.swift in Sources */,
 				0AD7B49E2BE3A854001C1D56 /* ContentView.swift in Sources */,
+				0A45E0C72BE4B0C6005CA30D /* ActivityView.swift in Sources */,
 				0AD7B49C2BE3A854001C1D56 /* OmodaShopApp.swift in Sources */,
+				0A45E0C92BE4B20B005CA30D /* CarInfoActivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
