@@ -26,6 +26,7 @@ final class OmodaViewModel: ObservableObject {
             updatePrice()
         }
     }
+    @Published public var isSharingActivity = false
     public var optionCost: Double
     public let options: [String]
     public let models: [String]

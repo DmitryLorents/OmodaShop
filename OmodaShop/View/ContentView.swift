@@ -28,6 +28,9 @@ struct ContentView: View {
         static let insuranceMessage = "Подключить Каско на выгодных условиях?"
         static let no = "Нет"
         static let yes = "Да"
+        static let activityName = "Omoda"
+        static let activityImageName = "omodaActivity"
+        static let shareMessage = " по цене "
     }
     
     @ObservedObject private var viewModel = OmodaViewModel(model: CarData())
@@ -38,6 +41,12 @@ struct ContentView: View {
     }
     var step: Double {
         viewModel.optionCost
+    }
+    
+    private var carActivity: UIActivity {
+        CarInfoActivity(title: Constants.activityName, activityImageName: Constants.activityImageName) {
+            print("Activity shared")
+        }
     }
     
     var body: some View {
@@ -53,9 +62,15 @@ struct ContentView: View {
                     Spacer()
                     Image(.omodaLogo)
                     Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {
+                        viewModel.isSharingActivity = true
+                    }, label: {
                         Image(.share)
                             .frame(width: Constants.shareButtonWidth)
+                    })
+                    .sheet(isPresented: $viewModel.isSharingActivity, content: {
+                        let message = "\(viewModel.models[viewModel.modelIndex])\(Constants.shareMessage)\(Int(viewModel.actualPrice)) \(Constants.currency)"
+                        ActivityView(activitiItems: [message], applicationActivities: [carActivity])
                     })
                 }.padding(.horizontal)
                 Image(viewModel.models[viewModel.modelIndex], bundle: nil)

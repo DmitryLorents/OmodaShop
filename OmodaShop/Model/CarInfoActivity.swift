@@ -17,11 +17,12 @@ final class CarInfoActivity: UIActivity {
     
     // MARK: - Initializer
     
-    init(activityName: String, activityImageName: String, onTapAction: @escaping () -> Void) {
-        self.carActivityType = UIActivity.ActivityType("Action \(activityName)")
-        self.activityName = activityName
+    init(title: String, activityImageName: String, onTapAction: @escaping () -> Void) {
+        self.carActivityType = UIActivity.ActivityType(rawValue: "Action \(title)")
+        activityName = title
         self.activityImageName = activityImageName
         self.onTapAction = onTapAction
+        super.init()
     }
     
     // MARK: - Override
